@@ -2,8 +2,6 @@
 
 Reachboard is a small Microsoft 365 reception wallboard built with Next.js.
 
-I created it in my free time as a quick solution for the reception desk of my employer, so the team could get a fast overview of who is reachable, who is away, and who is likely to be available again soon.
-
 ## What it does
 
 - shows a compact wallboard of employees and their current reachability
