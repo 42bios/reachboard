@@ -1,0 +1,16 @@
+node_modules/
+.next/
+dist/
+coverage/
+
+.env
+.env.local
+.env.production
+.env.*.local
+!.env.example
+
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db

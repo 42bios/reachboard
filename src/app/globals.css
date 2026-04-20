@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+  background: #f4f7fb;
+  color: #0f172a;
+  font-family: Segoe UI, Aptos, Calibri, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@keyframes reachboard-card-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.reception-card {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.92), transparent 42%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.94));
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.96) inset,
+    0 18px 40px -34px rgba(15, 23, 42, 0.24),
+    0 10px 22px -24px rgba(148, 163, 184, 0.35);
+  animation: reachboard-card-enter 360ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease;
+}
+
+.reception-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.38), transparent 44%);
+  opacity: 0.9;
+}
+
+.reception-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.98) inset,
+    0 26px 46px -34px rgba(15, 23, 42, 0.28),
+    0 16px 28px -28px rgba(148, 163, 184, 0.28);
+}
+
+.reception-card-body {
+  position: relative;
+  z-index: 1;
+}
+
+.reception-avatar {
+  box-shadow:
+    0 0 0 1px rgba(226, 232, 240, 0.95),
+    0 10px 22px -20px rgba(15, 23, 42, 0.45);
+}
+
+.reception-badge-shell {
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.98),
+    0 10px 18px -14px rgba(15, 23, 42, 0.45);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.reception-card:hover .reception-badge-shell {
+  transform: scale(1.04);
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 1),
+    0 14px 22px -14px rgba(15, 23, 42, 0.48);
+}
+
+.input {
+  width: 100%;
+  border: 1px solid #dbe2ea;
+  border-radius: 18px;
+  background: #f8fafc;
+  color: #0f172a;
+  padding: 12px 14px;
+  font: inherit;
+  line-height: 1.45;
+  resize: vertical;
+  outline: none;
+  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+}
+
+.input:focus {
+  border-color: #94a3b8;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+}

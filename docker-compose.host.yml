@@ -1,0 +1,43 @@
+services:
+  reception:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: reachboard
+    restart: unless-stopped
+    environment:
+      HOSTNAME: 0.0.0.0
+      PORT: 3010
+      MS_GRAPH_CLIENT_ID: ${MS_GRAPH_CLIENT_ID:?MS_GRAPH_CLIENT_ID is required}
+      MS_GRAPH_CLIENT_SECRET: ${MS_GRAPH_CLIENT_SECRET:?MS_GRAPH_CLIENT_SECRET is required}
+      MS_GRAPH_TENANT_ID: ${MS_GRAPH_TENANT_ID:?MS_GRAPH_TENANT_ID is required}
+      RECEPTION_GROUP_NAME: ${RECEPTION_GROUP_NAME:-Reception}
+      RECEPTION_ALLOWED_GROUPS: ${RECEPTION_ALLOWED_GROUPS:-Reception,IT}
+      RECEPTION_SETTINGS_ALLOWED_GROUPS: ${RECEPTION_SETTINGS_ALLOWED_GROUPS:-IT}
+      RECEPTION_SETUP_USERS: ${RECEPTION_SETUP_USERS:-}
+      RECEPTION_PUBLIC_BASE_URL: ${RECEPTION_PUBLIC_BASE_URL:-}
+      RECEPTION_SESSION_SECRET: ${RECEPTION_SESSION_SECRET:-}
+      RECEPTION_AUTO_REFRESH_SECONDS: ${RECEPTION_AUTO_REFRESH_SECONDS:-30}
+      RECEPTION_CONFIG_PATH: ${RECEPTION_CONFIG_PATH:-/data/settings.json}
+    volumes:
+      - /data/compose/reachboard/data:/data
+    expose:
+      - "3010"
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.http.routers.reachboard.rule=Host(`${TRAEFIK_RECEPTION_HOST:?TRAEFIK_RECEPTION_HOST is required}`)
+      - traefik.http.routers.reachboard.entrypoints=websecure
+      - traefik.http.routers.reachboard.tls=true
+      - traefik.http.services.reachboard.loadbalancer.server.port=3010
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider \"http://$(hostname -i | awk '{print $1}'):3010/api/auth/login\" >/dev/null 2>&1 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+networks:
+  proxy:
+    external: true
